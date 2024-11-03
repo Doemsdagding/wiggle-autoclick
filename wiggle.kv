@@ -1,0 +1,89 @@
+#:kivy 2.3.0
+#:import utils kivy.utils
+#:import Animation kivy.animation.Animation
+#:import Factory kivy.factory.Factory
+
+#:set dropshadow_color (0, 0, 0, 0.2)
+#:set standard_button_color (0.298, 0.686, 0.314, 1)
+#:set pressed_button_color (0.082, 0.149, 0.008, 1)
+#:set invis_button_color (0, 0, 0, 0)
+
+<RoundedButton@Button>:
+    background_color: 0, 0, 0, 0
+    button_color: (0.298, 0.686, 0.314, 1)
+    canvas.before:
+        Color:
+            rgba: dropshadow_color
+        RoundedRectangle:
+            pos: self.x + 3, self.y - 3
+            size: self.width, self.height
+            radius: [20,]
+        Color:
+            rgba: self.button_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
+    on_press:
+        Animation(button_color = pressed_button_color, duration=0.1).start(self)
+    on_release:
+        Animation(button_color =standard_button_color, duration=0.1).start(self)
+
+
+
+<MyRoot>:
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex('#F0F0F0')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp'
+        spacing: '15dp'
+
+        Label:
+            text: "Wiggle & auto click"
+            font_size: '36sp'
+            color: utils.get_color_from_hex('#126102')
+            size_hint_y: None
+            height: '50dp'
+            bold: True
+
+        RoundedButton:
+            id: wiggle_button
+            text: "Start Wiggler"
+            font_size: '14sp'
+            size_hint_x: None
+            size_hint_y: None
+            width: '140dp'
+            height: '40dp'
+            on_press: root.wiggler()
+            pos_hint: {'center_x': 0.5}
+
+        RoundedButton:
+            id: auto_click_button
+            text: "Start Auto Click"
+            font_size: '14sp'
+            size_hint_x: None
+            size_hint_y: None
+            width: '140dp'
+            height: '40dp'
+            on_press: root.auto_click()
+            pos_hint: {'center_x': 0.5}
+
+        RoundedButton:
+            id: hold_click_button
+            text: "hold Click"
+            font_size: '14sp'
+            size_hint_x: None
+            size_hint_y: None
+            width: '140dp'
+            height: '40dp'
+            on_press: root.hold_click()
+            pos_hint: {'center_x': 0.5}
+
+
+

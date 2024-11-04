@@ -42,6 +42,8 @@ class MyRoot(BoxLayout):
                 time.sleep(0.1)
                 if keyboard.is_pressed('esc'):
                     self.ids.wiggle_button.text = "Start Wiggler"
+                    self.stop_thread = True
+                    self.wiggling = False
                     break
 
         if not hasattr(self, 'wiggling'):
@@ -71,6 +73,8 @@ class MyRoot(BoxLayout):
                 time.sleep(0.1)
                 if keyboard.is_pressed('esc'):
                     self.ids.auto_click_button.text = "Start Clicking"
+                    self.stop_thread = True
+                    self.clicking = False
                     break
 
         if not hasattr(self, 'clicking'):
@@ -96,7 +100,9 @@ class MyRoot(BoxLayout):
                 pyautogui.mouseDown()
                 if keyboard.is_pressed('esc'):
                     pyautogui.mouseUp()
-                    self.ids.hold_click_button.text = "Hold Click"
+                    self.ids.hold_click_button.text = "Start Holding Click"
+                    self.stop_thread = True
+                    self.holding = False
                     break
             pyautogui.mouseUp()
 
@@ -111,7 +117,7 @@ class MyRoot(BoxLayout):
             hold_thread.start()
             self.holding = True
         else:
-            self.ids.hold_click_button.text = "Hold Click"
+            self.ids.hold_click_button.text = "Start Holding Click"
             self.stop_thread = True
             self.holding = False
             pyautogui.mouseUp()

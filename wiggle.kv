@@ -45,7 +45,7 @@
         spacing: '15dp'
 
         Label:
-            text: "Wiggle & auto click"
+            text: "Wiggle & click"
             font_size: '36sp'
             color: utils.get_color_from_hex('#126102')
             size_hint_y: None
@@ -54,13 +54,24 @@
 
         RoundedButton:
             id: wiggle_button
-            text: "Start Wiggler"
+            text: "Start Wiggle & click"
             font_size: '14sp'
             size_hint_x: None
             size_hint_y: None
             width: '140dp'
             height: '40dp'
             on_press: root.wiggler()
+            pos_hint: {'center_x': 0.5}
+
+        RoundedButton:
+            id: wiggle_button2
+            text: "Start Wiggle"
+            font_size: '14sp'
+            size_hint_x: None
+            size_hint_y: None
+            width: '140dp'
+            height: '40dp'
+            on_press: root.wigglenoclick()
             pos_hint: {'center_x': 0.5}
 
         RoundedButton:

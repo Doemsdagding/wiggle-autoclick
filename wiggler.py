@@ -41,7 +41,7 @@ class MyRoot(BoxLayout):
                 pyautogui.moveRel(0, -50, duration=0.5)
                 time.sleep(0.1)
                 if keyboard.is_pressed('esc'):
-                    self.ids.wiggle_button.text = "Start Wiggler"
+                    self.ids.wiggle_button.text = "Start Wiggle & click"
                     self.stop_thread = True
                     self.wiggling = False
                     break
@@ -57,7 +57,41 @@ class MyRoot(BoxLayout):
             wiggle_thread.start()
             self.wiggling = True
         else:
-            self.ids.wiggle_button.text = "Start Wiggler"
+            self.ids.wiggle_button.text = "Start Wiggle & click"
+            self.stop_thread = True
+            self.wiggling = False
+
+    def wigglenoclick(self):
+        """
+        Toggle mouse wiggle functionality. Moves mouse in small increments
+        until stopped by ESC key (close swhole  program) or stop button press.
+        """
+        def wiggle_mouse():
+            time.sleep(1)
+            while not self.stop_thread:
+                pyautogui.moveRel(50, 0, duration=0.5)
+                pyautogui.moveRel(-50, 0, duration=0.5)
+                pyautogui.moveRel(0, 50, duration=0.5)
+                pyautogui.moveRel(0, -50, duration=0.5)
+                time.sleep(0.1)
+                if keyboard.is_pressed('esc'):
+                    self.ids.wiggle_button2.text = "Start Wiggle"
+                    self.stop_thread = True
+                    self.wiggling = False
+                    break
+
+        if not hasattr(self, 'wiggling'):
+            self.wiggling = False
+
+        if not self.wiggling:
+            self.ids.wiggle_button2.text = "Stop Wiggle"
+            self.stop_thread = False
+            wiggle_thread = threading.Thread(target=wiggle_mouse)
+            wiggle_thread.daemon = True
+            wiggle_thread.start()
+            self.wiggling = True
+        else:
+            self.ids.wiggle_button2.text = "Start Wiggle"
             self.stop_thread = True
             self.wiggling = False
 
